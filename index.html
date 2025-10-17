@@ -1,0 +1,377 @@
+import { useState } from "react";
+
+// Section component
+function Section({ title, isActive, onClick, children }) {
+  return (
+    <div style={styles.section}>
+      <button style={styles.button} onClick={onClick}>
+        {title}
+      </button>
+      {isActive && <div style={styles.content}>{children}</div>}
+    </div>
+  );
+}
+
+// Main App
+function App() {
+  const [activeSection, setActiveSection] = useState(null);
+  const [modalImage, setModalImage] = useState(null);
+
+  const handleToggle = (section) => {
+    setActiveSection(activeSection === section ? null : section);
+  };
+
+  // Sample certificate data
+  const certificates = [
+    {
+      title: "Software Enginerring using UML",
+      link: "https://example.com/react-cert",
+      img: "p1.jpg",
+    },
+    {
+      title: "BlockChain Basics",
+      link: "https://example.com/spring-cert",
+      img: "p2.jpg",
+    },
+    
+    
+  ];
+
+  return (
+    <div style={styles.container}>
+      {/* Header with Profile Picture */}
+      <div style={styles.header}>
+        <img
+          src="pic.jpg" // replace with your profile picture
+          alt="Profile"
+          style={styles.profilePic}
+        />
+        <h1 style={styles.title}>My Portfolio</h1>
+      </div>
+
+      {/* Personal Info */}
+      <Section
+        title="Personal Info"
+        isActive={activeSection === "personal"}
+        onClick={() => handleToggle("personal")}
+      >
+        <p><strong>Name:</strong> Shagun Kapse</p>
+        <p><strong>Location:</strong> India</p>
+        <p><strong>Email:</strong> shagun.kapse23@pcu.edu.in.com</p>
+        <p><strong>About me:</strong> Passionate developer building modern web applications with Java and React. Building logic and problem-solving capabilities to solve real world problems.</p>
+      </Section>
+
+      {/* Education */}
+      <Section
+        title="Education"
+        isActive={activeSection === "education"}
+        onClick={() => handleToggle("education")}
+      >
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th style={styles.th}>Level</th>
+              <th style={styles.th}>Institution</th>
+              <th style={styles.th}>Year</th>
+              <th style={styles.th}>Marks / CGPA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style={styles.td}>SSC (10th)</td>
+              <td style={styles.td}>Jai Hind High School</td>
+              <td style={styles.td}>2020-2021</td>
+              <td style={styles.td}>91.20%</td>
+            </tr>
+            <tr>
+              <td style={styles.td}>HSC (12th)</td>
+              <td style={styles.td}>Jai Hind Junior College</td>
+              <td style={styles.td}>2022-2023</td>
+              <td style={styles.td}>70%</td>
+            </tr>
+            <tr>
+              <td style={styles.td}>B.Tech - 1st Year</td>
+              <td style={styles.td}>Pimpri Chinchwad University</td>
+              <td style={styles.td}>2022</td>
+              <td style={styles.td}>8.2 CGPA</td>
+            </tr>
+            <tr>
+              <td style={styles.td}>B.Tech - 2nd Year</td>
+              <td style={styles.td}>Pimpri Chinchwad University</td>
+              <td style={styles.td}>2023</td>
+              <td style={styles.td}>8.5 CGPA</td>
+            </tr>
+          </tbody>
+        </table>
+      </Section>
+
+   <Section
+  title="Hobbies & Skills"
+  isActive={activeSection === "hobbies"}
+  onClick={() => handleToggle("hobbies")}
+>
+  <div style={styles.hobbiesSkillsContainer}>
+    {/* Hobbies Column */}
+    <div style={styles.column}>
+      <h3 style={styles.columnTitle}>Hobbies</h3>
+      <div style={styles.item}><span role="img" aria-label="dance">💃</span> Dancing</div>
+      <div style={styles.item}><span role="img" aria-label="music">🎵</span> Music</div>
+      <div style={styles.item}><span role="img" aria-label="reading">📖</span> Reading</div>
+    </div>
+
+    {/* Skills Column */}
+    <div style={styles.column}>
+      <h3 style={styles.columnTitle}>Skills</h3>
+      <div style={styles.item}><span role="img" aria-label="react">⚛️</span> React.js</div>
+      <div style={styles.item}><span role="img" aria-label="java">☕</span> Java</div>
+      <div style={styles.item}><span role="img" aria-label="mysql">💾</span> MySQL</div>
+    </div>
+  </div>
+</Section>
+
+
+
+      {/* Work Experience */}
+      <Section
+        title="Work Experience"
+        isActive={activeSection === "experience"}
+        onClick={() => handleToggle("experience")}
+      >
+        <ul style={{ paddingLeft: "20px" }}>
+          <li>
+            <strong>Python Developer Intern</strong> - Acemgrade (June 2025 - August 2025)
+            <p>• Had a online Internship opportunity as the python developer</p>
+            <p>• Developed the chatbot , learned various libraries and its application.</p>
+          </li>
+          <li style={{ marginTop: "10px" }}>
+            <strong>Sponshorship team head</strong> - Pimpri Chinchwad University (Apr 2023 - Apr 2025)
+            <p>• Built the sponshorship team for the cultural event and lead the team</p>
+            <p>• Got the various different sponsors onbaord for the same such as forever52, pizza hut etc</p>
+          </li>
+          <li style={{ marginTop: "10px" }}>
+            <strong>Blockchain Club Member</strong> - Pimpri Chinchwad University  (2025 - Present)
+            <p>• Member of the ChainAlcemey Blockchain club</p>
+            <p>• ACtive Member and seeking knowledge in smart contracts and defi </p>
+          </li>
+        </ul>
+      </Section>
+
+      {/* Certificates */}
+      <Section
+        title="Certificates"
+        isActive={activeSection === "certificates"}
+        onClick={() => handleToggle("certificates")}
+      >
+        <div style={styles.certGrid}>
+          {certificates.map((cert, idx) => (
+            <div key={idx} style={styles.certItem}>
+              <img
+                src={cert.img}
+                alt={cert.title}
+                style={styles.certImage}
+                onClick={() => setModalImage(cert.img)}
+              />
+              <a
+                href={cert.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={styles.certLink}
+              >
+                {cert.title}
+              </a>
+            </div>
+          ))}
+        </div>
+      </Section>
+
+      {/* Modal for Enlarged Certificate Image */}
+      {modalImage && (
+        <div style={styles.modal} onClick={() => setModalImage(null)}>
+          <img src={modalImage} alt="Certificate" style={styles.modalImage} />
+        </div>
+      )}
+
+      {/* Contact Me */}
+      <Section
+  title="Contact Me"
+  isActive={activeSection === "contact"}
+  onClick={() => handleToggle("contact")}
+>
+  <p>
+    📧 Email: 
+    <a 
+      href="mailto:shagun.kapse23@pcu.edu.in"
+      style={{ color: "#00d4ff", textDecoration: "none" }}
+    >
+      shagun.kapse23@pcu.edu.in
+    </a>
+  </p>
+  <p>
+    🔗 LinkedIn: 
+    <a 
+      href="https://www.linkedin.com/in/Shagun Kapse/" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      style={{ color: "#00d4ff", textDecoration: "none" }}
+    >
+      linkedin.com/ShagunKapse
+    </a>
+  </p>
+  <p>
+    💻 GitHub: 
+    <a 
+      href="https://github.com/Shagunkapse-7" 
+      target="_blank" 
+      rel="noopener noreferrer"
+      style={{ color: "#00d4ff", textDecoration: "none" }}
+    >
+      github.com/Shagunkapse-7
+    </a>
+  </p>
+</Section>
+
+    </div>
+  );
+}
+
+// Styles
+const styles = {
+  container: {
+    maxWidth: "700px",
+    margin: "40px auto",
+    fontFamily: "Arial, sans-serif",
+    backgroundColor: "#0a0a0a",
+    color: "#ffffff",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 0 20px rgba(0,0,255,0.4)",
+  },
+  header: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "20px",
+    marginBottom: "30px",
+  },
+  profilePic: {
+    width: "80px",
+    height: "80px",
+    borderRadius: "50%",
+    border: "2px solid #00d4ff",
+    objectFit: "cover",
+  },
+  title: {
+    color: "#00d4ff",
+    fontSize: "36px",
+    textAlign: "center",
+  },
+  section: {
+    marginBottom: "20px",
+    border: "1px solid #00d4ff",
+    borderRadius: "8px",
+    overflow: "hidden",
+  },
+  button: {
+    width: "100%",
+    padding: "14px",
+    textAlign: "left",
+    fontSize: "18px",
+    background: "#1a1a1a",
+    color: "#00d4ff",
+    border: "none",
+    cursor: "pointer",
+    outline: "none",
+    fontWeight: "bold",
+  },
+  content: {
+    padding: "14px",
+    background: "#121212",
+    fontSize: "16px",
+  },
+  table: {
+    width: "100%",
+    borderCollapse: "collapse",
+    marginTop: "10px",
+  },
+  th: {
+    border: "1px solid #00d4ff",
+    padding: "10px",
+    background: "#1a1a1a",
+    color: "#00d4ff",
+    textAlign: "left",
+  },
+  td: {
+    border: "1px solid #00d4ff",
+    padding: "10px",
+  },
+ hobbiesSkillsContainer: {
+  display: "flex",
+  gap: "40px", // space between Hobbies and Skills
+},
+column: {
+  display: "flex",
+  flexDirection: "column",
+  gap: "10px",
+},
+columnTitle: {
+  marginBottom: "8px",
+  color: "#00d4ff",
+  fontSize: "18px",
+},
+item: {
+  display: "flex",
+  alignItems: "center",
+  gap: "8px",
+  backgroundColor: "#1a1a1a",
+  padding: "8px 12px",
+  borderRadius: "5px",
+  border: "1px solid #00d4ff",
+},
+
+
+  certGrid: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "15px",
+    justifyContent: "flex-start",
+  },
+  certItem: {
+    width: "150px",
+    textAlign: "center",
+  },
+  certImage: {
+    width: "100%",
+    height: "100px",
+    objectFit: "cover",
+    cursor: "pointer",
+    borderRadius: "5px",
+    border: "2px solid #00d4ff",
+  },
+  certLink: {
+    display: "block",
+    marginTop: "5px",
+    color: "#00d4ff",
+    textDecoration: "none",
+    fontSize: "14px",
+  },
+  modal: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100vw",
+    height: "100vh",
+    backgroundColor: "rgba(0,0,0,0.8)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    zIndex: 1000,
+    cursor: "pointer",
+  },
+  modalImage: {
+    maxWidth: "90%",
+    maxHeight: "80%",
+    borderRadius: "10px",
+  },
+};
+
+export default App;
